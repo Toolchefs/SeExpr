@@ -67,31 +67,31 @@ set(CMAKE_DIR "share/cmake/${PROJECT_NAME}")
 set(INCLUDE_DIR "include/${PROJECT_NAME}")
 
 set(GTEST_DIR "" CACHE STRING "Where to find GTEST")
-option(ENABLE_LLVM_BACKEND "Whether to build with LLVM backend" TRUE)
-option(ENABLE_QT5 "Whether to use Qt5" TRUE)
+option(ENABLE_LLVM_BACKEND "Whether to build with LLVM backend" False)
+option(ENABLE_QT5 "Whether to use Qt5" False)
 option(ENABLE_SSE4 "Whether to use SSE4" TRUE)
-option(USE_PYTHON "Whether to compile python libraries" TRUE)
-option(BUILD_UTILS "Whether to build the utilities" TRUE)
-option(BUILD_DEMOS "Whether to build the demos" TRUE)
-option(BUILD_DOC "Whether to build the documentation" TRUE)
-option(BUILD_TESTS "Whether to build the tests" TRUE)
-option(ENABLE_SLOW_TESTS "Whether to enable slow tests" FALSE)
+option(USE_PYTHON "Whether to compile python libraries" False)
+option(BUILD_UTILS "Whether to build the utilities" False)
+option(BUILD_DEMOS "Whether to build the demos" False)
+option(BUILD_DOC "Whether to build the documentation" False)
+option(BUILD_TESTS "Whether to build the tests" False)
+option(ENABLE_SLOW_TESTS "Whether to enable slow tests" False)
 
 if(USE_PYTHON)
-# Configuration options
-# TODO: find GTEST and boost and python the proper ways
-set(BOOST_DIR /usr CACHE PATH "where boost is located")
+	# Configuration options
+	# TODO: find GTEST and boost and python the proper ways
+	set(BOOST_DIR /usr CACHE PATH "where boost is located")
 
-find_package(PythonInterp) # provides Python version check
-find_package(PythonLibs)
+	find_package(PythonInterp) # provides Python version check
+	find_package(PythonLibs)
 
-if(PYTHON_VERSION_MAJOR LESS 3)
-    set(BOOST_PYTHON_LIBNAME boost_python CACHE STRING "what library name for boost python")
-else()
-    # try to find boost_python3 in a way compatible with most distributions
-    find_library(BOOST_PYTHON3_LIB NAMES "boost_python3" "boost_python3${PYTHON_VERSION_MINOR}")
-    SET (BOOST_PYTHON_LIBNAME ${BOOST_PYTHON3_LIB} CACHE STRING "what library name for boost python")
-endif()
+	if(PYTHON_VERSION_MAJOR LESS 3)
+		set(BOOST_PYTHON_LIBNAME boost_python CACHE STRING "what library name for boost python")
+	else()
+		# try to find boost_python3 in a way compatible with most distributions
+		find_library(BOOST_PYTHON3_LIB NAMES "boost_python3" "boost_python3${PYTHON_VERSION_MINOR}")
+		SET (BOOST_PYTHON_LIBNAME ${BOOST_PYTHON3_LIB} CACHE STRING "what library name for boost python")
+	endif()
 endif()
 
 
